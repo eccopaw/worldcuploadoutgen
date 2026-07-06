@@ -201,6 +201,7 @@ h1 .hl{color:var(--gold)}
     • <span class="r">Pool 1 (−1)</span>: Shotgunner, Plasma Trooper, DJ, Commander, Mortar, Marksman, Fragger — each removes one slot from your teammate.<br>
     • Pool 2 (±0): Cryo-Gunner, Flamethrower, Mercenary, Graveyard, Commando, Tuber, Patrol, Railgunner, Enforcer, Golden Commando — no effect on teammate.<br>
     • <span class="g">Pool 3 (+1)</span>: Barracks, Tweeter, Phaser, Sniper, Zed — each grants one slot to your teammate.<br>
+    • <b>Hard cap: 5 slots.</b> A player can never have more than 5 slots, no matter how many Pool 3 towers their teammate runs.<br>
     • Both players may run the same tower. A pairing is <b>valid</b> when neither player's picks exceed their adjusted slot count.</p>
   </section>
 </div>
@@ -217,6 +218,7 @@ const POOLS = [
    towers:["Barracks","Tweeter","Phaser","Sniper","Zed"]}
 ];
 const BASE = 4;
+const MAX = 5; // slots can never exceed 5, no matter how many Pool 3 towers a teammate runs
 const state = {1:new Set(["0::Farm"]), 2:new Set(["0::Farm"])};
 
 function deltaFrom(pnum){
@@ -307,16 +309,18 @@ function renderLedger(pnum, names, slots, fromMate){
   }
   document.getElementById("l"+pnum).textContent = `${picks} used / ${Math.max(slots,0)} avail`;
   const sign = fromMate>0 ? `<span class="pos">+${fromMate}</span>` : fromMate<0 ? `<span class="neg">${fromMate}</span>` : "±0";
+  const capped = BASE + fromMate > MAX;
   document.getElementById("math"+pnum).innerHTML =
-    `<b>${BASE}</b> base ${sign} from teammate = <b>${slots}</b> slot${slots===1?"":"s"}`;
+    `<b>${BASE}</b> base ${sign} from teammate = <b>${slots}</b> slot${slots===1?"":"s"}`
+    + (capped ? ` <span class="neg">(capped at ${MAX})</span>` : "");
   document.getElementById("c"+pnum).textContent = `${picks} picked (incl. Farm)`;
 }
 
 function render(){
   const names1 = pickNames(1), names2 = pickNames(2);
   const p1picks = names1.length, p2picks = names2.length;
-  const p1slots = BASE + deltaFrom(2);
-  const p2slots = BASE + deltaFrom(1);
+  const p1slots = Math.min(BASE + deltaFrom(2), MAX);
+  const p2slots = Math.min(BASE + deltaFrom(1), MAX);
   renderLedger(1, names1, p1slots, deltaFrom(2));
   renderLedger(2, names2, p2slots, deltaFrom(1));
 
