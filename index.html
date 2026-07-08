@@ -198,7 +198,7 @@ h1 .hl{color:var(--gold)}
   <section class="rules">
     <h3>Ruleset</h3>
     <p>• 4 slots per player. <b>Farm is mandatory</b> and occupies the first slot.<br>
-    • <span class="r">Pool 1 (−1)</span>: Shotgunner, Plasma Trooper, DJ, Commander, Mortar, Marksman, Fragger — each removes one slot from your teammate.<br>
+    • <span class="r">Pool 1 (−1)</span>: Shotgunner, DJ, Commander, Mortar, Marksman, Fragger — each removes one slot from your teammate.<br>
     • Pool 2 (±0): Cryo-Gunner, Flamethrower, Mercenary, Graveyard, Commando, Tuber, Patrol, Railgunner, Enforcer, Golden Commando — no effect on teammate.<br>
     • <span class="g">Pool 3 (+1)</span>: Barracks, Tweeter, Phaser, Sniper, Zed — each grants one slot to your teammate.<br>
     • <b>Hard cap: 5 slots.</b> A player can never have more than 5 slots, no matter how many Pool 3 towers their teammate runs.<br>
@@ -211,7 +211,7 @@ const POOLS = [
   {id:0, delta:0, name:"Required", effect:"Farm is always equipped", cls:"d0", tag:"±0",
    towers:["Farm"], locked:true},
   {id:1, delta:-1, name:"Pool 1", effect:"teammate loses 1 slot each", cls:"d1", tag:"−1",
-   towers:["Shotgunner","Plasma Trooper","DJ","Commander","Mortar","Marksman","Fragger"]},
+   towers:["Shotgunner","DJ","Commander","Mortar","Marksman","Fragger"]},
   {id:2, delta:0, name:"Pool 2", effect:"no effect on teammate", cls:"d0", tag:"±0",
    towers:["Cryo-Gunner","Flamethrower","Mercenary","Graveyard","Commando","Tuber","Patrol","Railgunner","Enforcer","Golden Commando"]},
   {id:3, delta:+1, name:"Pool 3", effect:"teammate gains 1 slot each", cls:"d3", tag:"+1",
